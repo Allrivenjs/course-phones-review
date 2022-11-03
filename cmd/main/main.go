@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/allrivenjs/course-phones-review/gadgets/smartphones/web"
 	"github.com/allrivenjs/course-phones-review/internal/database"
 	"github.com/allrivenjs/course-phones-review/internal/logs"
 	_ "github.com/go-sql-driver/mysql"
@@ -19,8 +20,8 @@ func main() {
 	_ = logs.InitLogger()
 	client := database.NewSqlClient("root:@tcp(localhost:3306)/" + schemaName)
 	doMigrate(client, schemaName)
-
-	mux := Routes()
+	handler := web.NewCreateSmartphoneHandler(client)
+	mux := Routes(handler)
 	server := NewServer(mux)
 	server.Run()
 

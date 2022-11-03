@@ -2,12 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/allrivenjs/course-phones-review/gadgets/smartphones/web"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"net/http"
 )
 
-func Routes() *chi.Mux {
+func Routes(sph *web.CreateSmartphoneHandler) *chi.Mux {
 	mux := chi.NewMux()
 
 	//middleware
@@ -17,7 +18,7 @@ func Routes() *chi.Mux {
 	)
 
 	//routes
-	mux.Post("/smartphones", nil)
+	mux.Post("/smartphones", sph.SaveSmartphoneHandler)
 	mux.Get("/hello", helloHandler)
 	return mux
 }
